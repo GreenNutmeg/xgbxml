@@ -896,6 +896,15 @@ def get_shell_from_polyloop_of_RectangularGeometry(gbxml_rectangular_geometry,
                                               pt[1])) 
                 for pt in shell2d)
 
+
+def get_shell_from_poly_loop_of_RectangularGeometry(gbxml_rectangular_geometry,
+                                                    xsd_schema):
+    """Compatibility wrapper for old function name."""
+    return get_shell_from_polyloop_of_RectangularGeometry(
+        gbxml_rectangular_geometry,
+        xsd_schema,
+    )
+
     
         
 def get_start_point_of_RectangularGeometry(

@@ -6,6 +6,7 @@ Created on Mon May  9 09:39:02 2022
 """
 
 import unittest
+import os
 
 from lxml import etree
 from copy import copy
@@ -13,7 +14,7 @@ from copy import copy
 import xgbxml.gbxml_functions as gbxml_functions
 
 
-fp=r'files\gbXMLStandard.xml'
+fp = os.path.join(os.path.dirname(__file__), 'files', 'gbXMLStandard.xml')
 parser = etree.XMLParser(remove_blank_text=True)
 tree = etree.parse(fp, parser)
 gbxml=tree.getroot()
@@ -26,7 +27,7 @@ sp=gbxml.xpath('//gbxml:Space', namespaces=ns)[0]  # first Space
 su=gbxml.xpath('//gbxml:Surface[@id="aim12670"]', namespaces=ns)[0]  # specific surface
 op=gbxml.xpath('//gbxml:Surface[@id="aim12670"]/gbxml:Opening', namespaces=ns)[0]  # specific opening
 
-fp=r'files\GreenBuildingXML_Ver6.01.xsd'
+fp = os.path.join(os.path.dirname(__file__), 'files', 'GreenBuildingXML_Ver6.01.xsd')
 xsd_schema = etree.parse(fp).getroot()
 
 

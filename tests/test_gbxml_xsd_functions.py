@@ -10,10 +10,11 @@ import unittest
 from xgbxml.gbxml_xsd_functions import *
 
 from lxml import etree
+import os
 
 from copy import copy
 
-fp=r'files/GreenBuildingXML_Ver6.01.xsd'
+fp=os.path.join(os.path.dirname(__file__), 'files', 'GreenBuildingXML_Ver6.01.xsd')
 tree=etree.parse(fp)
 xsd_schema=tree.getroot()
 namespace='http://www.gbxml.org/schema'

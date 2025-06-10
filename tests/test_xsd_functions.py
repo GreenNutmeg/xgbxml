@@ -10,10 +10,11 @@ import unittest
 import xgbxml.xsd_functions as xsd_functions
 
 from lxml import etree
+import os
 
 from copy import copy
 
-fp=r'files/GreenBuildingXML_Ver6.01.xsd'
+fp=os.path.join(os.path.dirname(__file__), 'files', 'GreenBuildingXML_Ver6.01.xsd')
 tree=etree.parse(fp)
 xsd_schema=tree.getroot()
 ns={'xsd':'http://www.w3.org/2001/XMLSchema'}
@@ -121,4 +122,3 @@ if __name__=='__main__':
     unittest.main()
     
     
-
