@@ -7,6 +7,7 @@ dictionaries in this directory.
 
 """
 import json
+import os
 from lxml import etree
 
 ns={'xsd':r'http://www.w3.org/2001/XMLSchema'}
@@ -78,15 +79,23 @@ def attributes_dict(attributes):
 
 
 def child_element_dict(child_element):
-    annotations_texts=child_element.xpath(r'./xsd:annotation/xsd:*/text()',namespaces=ns)
-    d=dict(child_element.attrib)
-    del d['ref']
-    d['annotations']=annotations_texts
-    return d
+    annotations_texts = child_element.xpath(r'./xsd:annotation/xsd:*/text()',
+                                            namespaces=ns)
+    d = dict(child_element.attrib)
+    key = d.pop('ref', None)
+    if key is None:
+        key = d.pop('name', None)
+    d['annotations'] = annotations_texts
+    return key, d
 
 
 def child_elements_dict(child_elements):
-    return {child_element.attrib['ref']:child_element_dict(child_element) for child_element in child_elements}
+    result = {}
+    for child_element in child_elements:
+        key, value = child_element_dict(child_element)
+        if key is not None:
+            result[key] = value
+    return result
 
 
 def element_dict(element):
@@ -144,22 +153,26 @@ def schema_dict(schema):
     
 
 def get_schema_dict(version):
-    ""
-    schema_file=r'../schemas/GreenBuildingXML_Ver%s.xsd' % version
+    """Return the schema dictionary for a given version."""
+    base_dir = os.path.dirname(__file__)
+    schema_file = os.path.join(base_dir, '..', 'schemas',
+                               f'GreenBuildingXML_Ver{version}.xsd')
     schema_element_tree = etree.parse(schema_file)
     schema_root=schema_element_tree.getroot()
     d=schema_dict(schema_root)
     return d
 
 
-# CREATE AND SAVE THE SCHEMA DICTIONARIES 
-import os
-for fp in os.listdir(r'../schemas'):
+# CREATE AND SAVE THE SCHEMA DICTIONARIES
+schema_dir = os.path.join(os.path.dirname(__file__), '..', 'schemas')
+for fp in os.listdir(schema_dir):
     if fp.startswith('__'):continue
     print(fp)
     version=fp[-8:-4]
     #print(version)
-    with open('schema_dict_%s.json' % version.replace('.','_'),'w') as f:
+    output_path = os.path.join(os.path.dirname(__file__),
+                              f'schema_dict_{version.replace(".", "_")}.json')
+    with open(output_path, 'w') as f:
         json.dump(get_schema_dict(version), f, indent=4)
 
 

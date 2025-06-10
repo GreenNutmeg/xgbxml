@@ -2,13 +2,14 @@
 
 
 import unittest
+import os
 
 from xgbxml import get_parser, create_gbXML
 from xgbxml.xgbxml import gbCollection
 from lxml import etree
 
 
-fp=r'files\gbXMLStandard.xml'
+fp = os.path.join(os.path.dirname(__file__), 'files', 'gbXMLStandard.xml')
 parser=get_parser(version='0.37')
 tree = etree.parse(fp,parser)
         
