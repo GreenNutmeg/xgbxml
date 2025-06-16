@@ -22,10 +22,10 @@ from . import render_functions
 from . import geometry_functions 
 
 
-def get_parser(version='6.01'):
+def get_parser(version='7.03'):
     """Returns a lxml.etree.XMLParser containing custom elements for gbXML files.
     
-    :param version: The `gbxml version string <https://www.gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html#Link27C>`_. Default is '6.01'.
+    :param version: The `gbxml version string <https://www.gbxml.org/schema_doc/6.01/GreenBuildingXML_Ver6.01.html#Link27C>`_. Default is '7.03'.
     :type version: str
     
     :rtype: lxml.etree.XMLParser
